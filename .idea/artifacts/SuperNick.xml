@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SuperNick">
+    <output-path>$PROJECT_DIR$/../../server/dev/plugins</output-path>
+    <root id="archive" name="SuperNick.jar">
+      <element id="module-output" name="SuperNick" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/java/plugin.yml" />
+    </root>
+  </artifact>
+</component>

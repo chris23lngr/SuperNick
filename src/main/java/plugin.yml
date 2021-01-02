@@ -1,0 +1,8 @@
+name: SuperNick
+author: z1up
+version: 0.1
+main: de.z1up.supernick.SuperNick
+
+commands:
+  nick:
+  autonick:
