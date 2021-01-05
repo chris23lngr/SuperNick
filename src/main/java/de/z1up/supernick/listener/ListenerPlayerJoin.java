@@ -40,22 +40,27 @@ public class ListenerPlayerJoin implements Listener {
             NickPlayer nickPlayer = new NickPlayer(uuid, false, false, nickedAs);
             nickPlayer.insert();
 
-        }
+        } else {
 
-        NickPlayer nickPlayer = NickManager.instance.getNickWrapper().getNickPlayer(player.getUniqueId());
+            NickPlayer nickPlayer = NickManager.instance.getNickWrapper().getNickPlayer(player.getUniqueId());
 
-        if(nickPlayer == null) {
-            Bukkit.getConsoleSender().sendMessage(Messages.PLAYER_REGISTER_ERROR);
-            return;
-        }
+            if (nickPlayer == null) {
+                Bukkit.getConsoleSender().sendMessage(Messages.PLAYER_REGISTER_ERROR);
+                return;
+            }
 
-        if(nickPlayer.usesAutoNick()) {
-            UUID nickUUID = NickManager.instance.getRandomNickName();
-            String nickName = UUIDFetcher.getName(nickUUID);
+            if (nickPlayer.usesAutoNick()) {
+                UUID nickUUID = NickManager.instance.getRandomNickName();
+                String nickName = UUIDFetcher.getName(nickUUID);
 
-            NickUtils.nickPlayer(player, nickName);
+                NickUtils.nickPlayer(player, nickName);
 
-            player.sendMessage(Messages.NICKED_AS + nickName);
+                nickPlayer.setNicked(true);
+                nickPlayer.setNickedAs(nickUUID);
+                nickPlayer.update();
+
+                player.sendMessage(Messages.NICKED_AS + nickName);
+            }
         }
 
     }

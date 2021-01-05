@@ -4,6 +4,7 @@ import de.z1up.supernick.SuperNick;
 import de.z1up.supernick.nick.NickManager;
 import de.z1up.supernick.nick.NickPlayer;
 import de.z1up.supernick.util.Messages;
+import de.z1up.supernick.util.UUIDFetcher;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -60,14 +61,17 @@ public class CommandCheckNick implements CommandExecutor, TabCompleter {
 
         boolean nicked = false;
 
+        String actualname = "";
+
         if(NickManager.instance.getNickWrapper().isPlayerRegistered(targetUUID)) {
             NickPlayer nick = NickManager.instance.getNickWrapper().getNickPlayer(targetUUID);
             if(nick.isNicked()) {
                 nicked = true;
+                actualname = ""+ nick.getUuid();
             }
         }
 
-        player.sendMessage((nicked ? (Messages.TARGET_NICKED_AS + target.getName())
+        player.sendMessage((nicked ? ("§c" + actualname + Messages.TARGET_NICKED_AS + target.getName())
                 : Messages.TARGET_NOT_NICKED));
 
         return true;

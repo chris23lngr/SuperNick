@@ -40,6 +40,8 @@ public class CommandAutoNick implements CommandExecutor {
 
         NickPlayer nickPlayer = NickManager.instance.getNickWrapper().getNickPlayer(uuid);
 
+        System.out.println(nickPlayer.usesAutoNick());
+
         boolean enabled = nickPlayer.usesAutoNick();
 
         if(!enabled) {
@@ -47,6 +49,8 @@ public class CommandAutoNick implements CommandExecutor {
         } else {
             nickPlayer.setAutoNick(false);
         }
+
+        nickPlayer.update();
 
         player.sendMessage((enabled ? Messages.AUTONICK_DEACTIVATED
                 : Messages.AUTONICK_ACTIVATED));

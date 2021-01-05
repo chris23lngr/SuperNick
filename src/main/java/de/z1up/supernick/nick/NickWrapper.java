@@ -1,6 +1,7 @@
 package de.z1up.supernick.nick;
 
 import de.z1up.supernick.mysql.SQL;
+import de.z1up.supernick.util.UUIDFetcher;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
@@ -54,12 +55,6 @@ public class NickWrapper {
 
     }
 
-    public void updateAutNick(UUID uuid, boolean autoNick) {
-        String stmt = "UPDATE " + TABLE_NAME + " SET " + ATTRIBUTE_AUTO_NICK + "=? WHERE " + ATTRIBUTE_UUID + "=?";
-        sql.executeUpdate("UPDATE " + TABLE_NAME + " SET " + ATTRIBUTE_AUTO_NICK + "=? WHERE " + ATTRIBUTE_UUID + "=?", Arrays.asList(autoNick, uuid));
-        System.out.println("UPDATED AUTONICK TO " + autoNick);
-    }
-
     public void updateNickName(NickPlayer player) {
 
         UUID uuid = player.getUuid();
@@ -83,11 +78,11 @@ public class NickWrapper {
         try {
             if(rs.next()) {
 
-                boolean nicked = Boolean.getBoolean(rs.getString(ATTRIBUTE_NICKED));
-                boolean autoNick = Boolean.getBoolean(rs.getString(ATTRIBUTE_AUTO_NICK));
+                boolean nicked = Boolean.valueOf(rs.getString(ATTRIBUTE_NICKED));
+                boolean autoNick = Boolean.valueOf(rs.getString(ATTRIBUTE_AUTO_NICK));
                 UUID nickedAs = UUID.fromString(rs.getString(ATTRIBUTE_NICKED_AS));
 
-                NickPlayer nickPlayer = new NickPlayer(uuid, nicked, true, nickedAs);
+                NickPlayer nickPlayer = new NickPlayer(uuid, nicked, autoNick, nickedAs);
                 return nickPlayer;
             }
         } catch (SQLException throwable) {

@@ -62,6 +62,9 @@ public class NickManager {
     void readNickNames() {
         setConfig();
         nickNames = (ArrayList<String>) SuperNick.getInstance().getConfig().getStringList("Nick names");
+        for (String nickName : nickNames) {
+            System.out.println(nickName);
+        }
     }
 
 

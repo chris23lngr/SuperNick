@@ -31,15 +31,28 @@ public class NickUtils extends Reflects {
         spawnPlayer(craftPlayer);
 
         player.setDisplayName(name);
+        player.setPlayerListName(name);
 
     }
 
     public static void unnickPlayer(Player player) {
         //if(!player.isNicked()) { return; }
+
+        NickPlayer nickPlayer = NickManager.instance.getNickWrapper().getNickPlayer(player.getUniqueId());
         CraftPlayer cp = (CraftPlayer) player;
+
         destroyPlayer(cp);
         removePlayer(cp);
+
+        GameProfile profile = cp.getProfile();
+        changeGameProfileSkin(profile, player.getUniqueId());
+        changeGameProfileName(profile, UUIDFetcher.getName(nickPlayer.getUuid()));
+
         addPlayer(cp, cp.getProfile());
+        spawnPlayer(cp);
+
+        player.setDisplayName(profile.getName());
+        player.setPlayerListName(profile.getName());
     }
 
     private static void removePlayer(CraftPlayer craftPlayer) {

@@ -47,9 +47,12 @@ public class CommandNick implements CommandExecutor {
             UUID nickUUID = NickManager.instance.getRandomNickName();
             String nickName = UUIDFetcher.getName(nickUUID);
             NickUtils.nickPlayer(player, nickName);
+            nickPlayer.setNicked(true);
+            nickPlayer.setNickedAs(nickUUID);
+            nickPlayer.update();
         }
 
-        player.sendMessage((nicked ? Messages.NOT_NICKED : Messages.NICKNAME_ACTIVATED));
+        player.sendMessage((nicked ? Messages.ALREADY_NICKED : Messages.NICKNAME_ACTIVATED));
 
         return false;
     }

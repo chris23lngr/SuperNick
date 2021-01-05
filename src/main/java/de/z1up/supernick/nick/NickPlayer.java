@@ -40,16 +40,13 @@ public class NickPlayer {
         NickManager.instance.getNickWrapper().updatePlayer(this);
     }
 
-    public void updateNickName() {
-        NickManager.instance.getNickWrapper().updateNickName(this);
+    public void setNicked(boolean b) {
+        this.nicked = b;
     }
 
-    public void setNicked(boolean nicked) {
-        this.nicked = nicked;
-    }
-
-    public void setAutoNick(boolean autoNick) {
-        this.autoNick = autoNick;
+    public void setAutoNick(boolean b) {
+        this.autoNick = b;
+        System.out.println("Autonick was set tp " + b);
     }
 
     public void setNickedAs(UUID nickedAs) {

@@ -3,6 +3,7 @@ package de.z1up.supernick;
 import de.z1up.supernick.command.*;
 import de.z1up.supernick.listener.ListenerCommandPreProcess;
 import de.z1up.supernick.listener.ListenerPlayerJoin;
+import de.z1up.supernick.listener.ListenerPlayerQuit;
 import de.z1up.supernick.nick.NickManager;
 import de.z1up.supernick.util.Messages;
 import org.bukkit.Bukkit;
@@ -40,6 +41,7 @@ public class SuperNick extends JavaPlugin {
     void register() {
         new ListenerPlayerJoin();
         new ListenerCommandPreProcess();
+        new ListenerPlayerQuit();
 
         new CommandNick();
         new CommandAutoNick();
