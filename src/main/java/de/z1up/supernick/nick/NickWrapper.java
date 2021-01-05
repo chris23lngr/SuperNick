@@ -11,14 +11,12 @@ import java.util.UUID;
 
 public class NickWrapper {
 
-    private SQL sql;
-
-    private final String TABLE_NAME = "nick_players";
-
-    private final String ATTRIBUTE_UUID = "UUID";
-    private final String ATTRIBUTE_NICKED = "NICKED";
-    private final String ATTRIBUTE_AUTO_NICK = "AUTO_NICK";
-    private final String ATTRIBUTE_NICKED_AS = "NICKED_AS";
+    private SQL                 sql;
+    private final String        TABLE_NAME = "nick_players";
+    private final String        ATTRIBUTE_UUID = "UUID";
+    private final String        ATTRIBUTE_NICKED = "NICKED";
+    private final String        ATTRIBUTE_AUTO_NICK = "AUTO_NICK";
+    private final String        ATTRIBUTE_NICKED_AS = "NICKED_AS";
 
     public NickWrapper(SQL sql) {
         this.sql = sql;

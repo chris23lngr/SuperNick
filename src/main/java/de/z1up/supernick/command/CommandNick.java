@@ -4,6 +4,7 @@ import de.z1up.supernick.SuperNick;
 import de.z1up.supernick.nick.NickManager;
 import de.z1up.supernick.nick.NickPlayer;
 import de.z1up.supernick.nick.NickUtils;
+import de.z1up.supernick.util.Messages;
 import de.z1up.supernick.util.UUIDFetcher;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,6 +21,7 @@ public class CommandNick implements CommandExecutor {
     public CommandNick() {
         SuperNick.getInstance().getCommand(NAME).setExecutor(this::onCommand);
         SuperNick.getInstance().getCommand(NAME).setPermission(PERM);
+        SuperNick.getInstance().getCommand(NAME).setPermissionMessage(Messages.NO_PERM);
     }
 
     @Override
@@ -29,31 +31,25 @@ public class CommandNick implements CommandExecutor {
             return true;
         }
 
-        String prefix = SuperNick.getInstance().getPrefix();
-
         Player player = (Player) sender;
         UUID uuid = player.getUniqueId();
 
         if(!NickManager.instance.getNickWrapper().isPlayerRegistered(uuid)) {
-            player.sendMessage(prefix + "§cCannot execute this command at this time. Try again later.");
+            player.sendMessage(Messages.COMMAND_NOT_EXECUTABLE);
             return true;
         }
 
         NickPlayer nickPlayer = NickManager.instance.getNickWrapper().getNickPlayer(uuid);
 
-        if(nickPlayer.isNicked()) {
+        boolean nicked = nickPlayer.isNicked();
 
-            NickManager.instance.unnickPlayer(nickPlayer);
-            player.sendMessage(prefix + "§7You are now no longer nicked.");
-            return true;
+        if(!nicked) {
+            UUID nickUUID = NickManager.instance.getRandomNickName();
+            String nickName = UUIDFetcher.getName(nickUUID);
+            NickUtils.nickPlayer(player, nickName);
         }
 
-        UUID nickUUID = NickManager.instance.getRandomNickName();
-        String nickName = UUIDFetcher.getName(nickUUID);
-
-        new NickUtils().nickPlayer(player, nickName);
-
-        player.sendMessage(prefix + "§7You are now playing as §a" + nickName);
+        player.sendMessage((nicked ? Messages.NOT_NICKED : Messages.NICKNAME_ACTIVATED));
 
         return false;
     }

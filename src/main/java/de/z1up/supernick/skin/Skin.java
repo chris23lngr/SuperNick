@@ -12,13 +12,12 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.logging.Level;
 
-public class Skin {
+public class Skin extends Object {
 
-    private UUID uuid;
-
-    private String name;
-    private String value;
-    private String signature;
+    private UUID        uuid;
+    private String      name;
+    private String      value;
+    private String      signature;
 
     public Skin(UUID uuid) {
         this.uuid = uuid;
@@ -27,7 +26,6 @@ public class Skin {
 
     void loadSkin() {
         try {
-            // Get the name from SwordPVP
             URL url = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false");
             URLConnection uc = url.openConnection();
             uc.setUseCaches(false);
@@ -36,7 +34,6 @@ public class Skin {
             uc.addRequestProperty("Cache-Control", "no-cache, no-store, must-revalidate");
             uc.addRequestProperty("Pragma", "no-cache");
 
-            // Parse it
             String json = new Scanner(uc.getInputStream(), "UTF-8").useDelimiter("\\A").next();
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(json);

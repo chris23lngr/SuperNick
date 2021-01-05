@@ -6,3 +6,6 @@ main: de.z1up.supernick.SuperNick
 commands:
   nick:
   autonick:
+  unnick:
+  checknick:
+  whoami:

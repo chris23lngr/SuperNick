@@ -18,13 +18,13 @@ import org.bukkit.Bukkit;
 
 public class SQL {
 
-    private String host;
-    private String port;
-    private String database;
-    private String username;
-    private String password;
-    private Connection con;
-    private static ExecutorService executor;
+    private String                      host;
+    private String                      port;
+    private String                      database;
+    private String                      username;
+    private String                      password;
+    private Connection                  con;
+    private static ExecutorService      executor;
 
     private final String prefix = "§8[§6MySQL§8]" + " ";
 

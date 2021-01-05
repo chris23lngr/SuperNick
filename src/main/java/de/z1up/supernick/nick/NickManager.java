@@ -1,14 +1,11 @@
 package de.z1up.supernick.nick;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import de.z1up.supernick.SuperNick;
 import de.z1up.supernick.mysql.SQL;
 import de.z1up.supernick.mysql.SQLConfig;
-import de.z1up.supernick.skin.Skin;
+import de.z1up.supernick.util.Messages;
 import de.z1up.supernick.util.UUIDFetcher;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -58,7 +55,7 @@ public class NickManager {
     void setConfig() {
         SuperNick.getInstance().getConfig().options().copyDefaults(true);
         SuperNick.getInstance().getConfig().addDefault("Nick names",
-                        Arrays.asList("Peter123", "myguyjustin", "LumpeHD", "MeinGegner", "APlayer1234"));
+                Messages.playerExamples);
         SuperNick.getInstance().saveConfig();
     }
 
@@ -113,8 +110,6 @@ public class NickManager {
         player.setDisplayName(nickName);
         player.setPlayerListName(nickName);
 
-        setSkin(player, nickUUID);
-
         return nickName;
     }
 
@@ -134,34 +129,7 @@ public class NickManager {
         String name = player.getName();
         player.setDisplayName(name);
         player.setPlayerListName(name);
-
-        setSkin(player, uuid);
     }
 
-    public void setSkin(Player player, UUID uuid) {
-
-        GameProfile profile = ((CraftPlayer) player).getProfile();
-
-        profile.getProperties().clear();
-
-        Skin skin = new Skin(uuid);
-        if(skin.getName() != null) {
-            profile.getProperties().put(skin.getName(), new Property(skin.getName(), skin.getValue(), skin.getSignature()));
-        }
-
-        Bukkit.getScheduler().runTaskLater(SuperNick.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                Bukkit.getOnlinePlayers().forEach(players -> players.hidePlayer(player));
-            }
-        }, 5);
-
-        Bukkit.getScheduler().runTaskLater(SuperNick.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                Bukkit.getOnlinePlayers().forEach(players -> players.showPlayer(player));
-            }
-        }, 15);
-    }
 
 }

@@ -19,20 +19,15 @@ public class UUIDFetcher {
 
     // variables
 
-    public static final long FEBRUARY_2015 = 1422748800000L;
+    private static Gson                     gson = new GsonBuilder().registerTypeAdapter(UUID.class, new UUIDTypeAdapter()).create();
+    private static final String             UUID_URL = "https://api.mojang.com/users/profiles/minecraft/%s?at=%d";
+    private static final String             NAME_URL = "https://api.mojang.com/user/profiles/%s/names";
+    private static Map<String, UUID>        uuidCache = new HashMap<String, UUID>();
+    private static Map<UUID, String>        nameCache = new HashMap<UUID, String>();
+    private static ExecutorService          pool = Executors.newCachedThreadPool();
 
-    private static Gson gson = new GsonBuilder().registerTypeAdapter(UUID.class, new UUIDTypeAdapter()).create();
-
-    private static final String UUID_URL = "https://api.mojang.com/users/profiles/minecraft/%s?at=%d";
-    private static final String NAME_URL = "https://api.mojang.com/user/profiles/%s/names";
-
-    private static Map<String, UUID> uuidCache = new HashMap<String, UUID>();
-    private static Map<UUID, String> nameCache = new HashMap<UUID, String>();
-
-    private static ExecutorService pool = Executors.newCachedThreadPool();
-
-    private String name;
-    private UUID id;
+    private String                          name;
+    private UUID                            id;
 
     // methods
 
@@ -45,7 +40,7 @@ public class UUIDFetcher {
     public static boolean existsPlayer(String name) {
         return getUUID(name) != null;
     }
-
+    
     /**
      * Checks if a player exists by theire username.
      *

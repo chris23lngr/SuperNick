@@ -1,6 +1,5 @@
 package de.z1up.supernick.mysql;
 
-// imports
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,9 +10,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class SQLConfig {
 
-    private File dir;
-    private File file;
-    private FileConfiguration configuration;
+    private File                    dir;
+    private File                    file;
+    private FileConfiguration       configuration;
+
+    private final String ATTRIBUTE_HOST = "host";
+    private final String ATTRIBUTE_PORT = "port";
+    private final String ATTRIBUTE_DB = "database";
+    private final String ATTRIBUTE_USER = "username";
+    private final String ATTRIBUTE_PW = "password";
 
     public SQLConfig() {
         dir = SuperNick.getInstance().getDataFolder();
@@ -46,11 +51,11 @@ public class SQLConfig {
 
         configuration.options().copyDefaults(true);
 
-        configuration.addDefault("host", "localhost");
-        configuration.addDefault("port", "3306");
-        configuration.addDefault("database", "database");
-        configuration.addDefault("username", "username");
-        configuration.addDefault("password", "password");
+        configuration.addDefault(ATTRIBUTE_HOST, "localhost");
+        configuration.addDefault(ATTRIBUTE_PORT, "3306");
+        configuration.addDefault(ATTRIBUTE_DB, "database");
+        configuration.addDefault(ATTRIBUTE_USER, "username");
+        configuration.addDefault(ATTRIBUTE_PW, "password");
 
         save();
     }
@@ -66,11 +71,11 @@ public class SQLConfig {
     public HashMap<String, String> readData() {
 
         HashMap<String, String> data = new HashMap<>();
-        data.put("host", configuration.getString("host"));
-        data.put("port", configuration.getString("port"));
-        data.put("database", configuration.getString("database"));
-        data.put("username", configuration.getString("username"));
-        data.put("password", configuration.getString("password"));
+        data.put(ATTRIBUTE_HOST, configuration.getString(ATTRIBUTE_HOST));
+        data.put(ATTRIBUTE_PORT, configuration.getString(ATTRIBUTE_PORT));
+        data.put(ATTRIBUTE_DB, configuration.getString(ATTRIBUTE_DB));
+        data.put(ATTRIBUTE_USER, configuration.getString(ATTRIBUTE_USER));
+        data.put(ATTRIBUTE_PW, configuration.getString(ATTRIBUTE_PW));
 
         return data;
     }

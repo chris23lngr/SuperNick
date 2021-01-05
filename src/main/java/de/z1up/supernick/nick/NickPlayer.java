@@ -1,7 +1,5 @@
 package de.z1up.supernick.nick;
 
-import de.z1up.supernick.SuperNick;
-
 import java.util.UUID;
 
 public class NickPlayer {
